@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Match – Gezielte Unternehmensvermittlung</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --secondary-dark: #020617;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --border: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--secondary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 100%);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--secondary-dark) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-image {
+            max-width: 900px;
+            margin: 60px auto 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--text);
+            padding: 15px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-darker {
+            background: var(--secondary-dark);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .about-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--secondary);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .service-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--text);
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Process */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 30px;
+            background: var(--secondary);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .process-step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--secondary);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-dark);
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-muted);
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Business<span>Match</span></a>
+                <ul class="nav-links">
+                    <li><a href="#about">Über uns</a></li>
+                    <li><a href="#services">Leistungen</a></li>
+                    <li><a href="#process">Ablauf</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Wir verbinden Unternehmen gezielt miteinander</h1>
+                <p>Keine Kontaktlisten. Keine Zufallstreffer. Sondern recherchierte, vorqualifizierte und passgenaue Geschäftskontakte – damit Sie sich auf das Wesentliche konzentrieren können: Ihre Kernleistung.</p>
+                <a href="#contact" class="btn">Jetzt Anfrage stellen</a>
+                
+                <!-- Hero Image - Platzhalter für dein Foto -->
+                <div class="hero-image">
+                    <!-- ERSETZE DEN SRC-PFAD MIT DEINEM BILD -->
+                    <!-- Beispiel: src="images/tolga.jpg" -->
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&h=500&fit=crop" alt="Professionelles Business-Foto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h3>Warum Business Match?</h3>
+                    <p>Die meisten Vermittlungen scheitern nicht an der Leistung, sondern an der falschen Vorauswahl. Wir ändern das.</p>
+                    <p>Unser Ansatz: Wir verstehen Ihren Bedarf, recherchieren passende Unternehmen, qualifizieren diese vor und bringen Sie anschließend persönlich mit den passenden Unternehmen zusammen. Sie sparen Zeit, vermeiden Fehlkontakte und erhalten ausschließlich relevante Gesprächspartner.</p>
+                    <p>Wir garantieren keine Vertragsabschlüsse – aber wir garantieren strukturierte Vorarbeit und qualifizierte Kontakte.</p>
+                    <a href="#services" class="btn btn-outline">Unsere Leistungen</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop" alt="Team bei der Arbeit">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section section-darker" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Unsere Leistungen</h2>
+                <p>Wir bieten Ihnen einen kompletten Service – von der Bedarfsanalyse bis zum organisierten Kennenlerngespräch.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <!-- Recherche Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    </div>
+                    <h3>Bedarfsanalyse & Recherche</h3>
+                    <p>Wir analysieren Ihre Anforderungen im Detail und recherchieren gezielt passende Unternehmen in Ihrer Branche und Region.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <!-- Vorqualifizierung Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </div>
+                    <h3>Vorqualifizierung</h3>
+                    <p>Jeder potenzielle Partner wird auf fachliche Passung, Kapazität, Zuverlässigkeit und Kooperationsbereitschaft geprüft.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <!-- Matching Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h3>Matching & Kontaktaufnahme</h3>
+                    <p>Wir wählen die besten Kandidaten aus, kontaktieren diese persönlich und stellen den direkten Kontakt zwischen Ihnen und dem Partner her.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <!-- Organisation Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    </div>
+                    <h3>Meeting-Organisation</h3>
+                    <p>Wir organisieren das Kennenlerngespräch, bereiten beide Seiten vor und begleiten den Prozess bis zum erfolgreichen Abschluss.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <!-- Follow-up Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h3>Follow-up & Betreuung</h3>
+                    <p>Nach dem Matching bleiben wir im Austausch, holen Feedback ein und unterstützen bei der weiteren Zusammenarbeit.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <!-- Partnerschaft Icon - ZWEI HÄNDE IM HANDSCHLAG (SVG) -->
+                        <svg viewBox="0 0 24 24"><path d="M21 11.5c0-1.93-1.57-3.5-3.5-3.5-.52 0-1.01.12-1.46.32-.28-1.35-1.48-2.32-2.91-2.32-.4 0-.78.09-1.13.24V6c0-1.66-1.34-3-3-3S6 4.34 6 6v1.5c0 .28.22.5.5.5s.5-.22.5-.5V6c0-1.1.9-2 2-2s2 .9 2 2v2.5c0 .28.22.5.5.5s.5-.22.5-.5V8c0-.55.45-1 1-1s1 .45 1 1v2.5c0 .28.22.5.5.5s.5-.22.5-.5V9c0-1.38 1.12-2.5 2.5-2.5S20 7.62 20 9v2.5c0 .28.22.5.5.5s.5-.22.5-.5V11.5zM4 13.5c0-1.93 1.57-3.5 3.5-3.5.52 0 1.01.12 1.46.32.28-1.35 1.48-2.32 2.91-2.32.4 0 .78.09 1.13.24V8c0-1.66 1.34-3 3-3s3 1.34 3 3v1.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5V8c0-1.1-.9-2-2-2s-2 .9-2 2v2.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5V10c0-.55-.45-1-1-1s-1 .45-1 1v2.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5V13c0-1.38-1.12-2.5-2.5-2.5S5 11.62 5 13v2.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5V13.5z"/></svg>
+                    </div>
+                    <h3>Partnerschaften aufbauen</h3>
+                    <p>Wir helfen Ihnen, langfristige, vertrauensvolle Geschäftsbeziehungen aufzubauen – basierend auf echten Schnittstellen und gemeinsamen Werten.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section" id="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>So funktioniert's</h2>
+                <p>Ein klarer, strukturierter Prozess – von der ersten Anfrage bis zum erfolgreichen Matching.</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Bedarf aufnehmen</h3>
+                    <p>Wir analysieren Ihre Anforderungen, Ziele und Kriterien im Detail.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Recherche</h3>
+                    <p>Gezielte Suche nach passenden Unternehmen in Ihrer Branche und Region.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Vorqualifizierung</h3>
+                    <p>Prüfung auf fachliche Passung, Kapazität und Kooperationsbereitschaft.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Kontaktaufnahme</h3>
+                    <p>Persönliche Ansprache der ausgewählten Partner und Interessenprüfung.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h3>Kennenlerngespräch</h3>
+                    <p>Organisation und Vorbereitung des Meetings zwischen Ihnen und dem Partner.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">6</div>
+                    <h3>Follow-up</h3>
+                    <p>Begleitung des Prozesses, Feedback und Unterstützung bei der Zusammenarbeit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section section-darker" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kontakt aufnehmen</h2>
+                <p>Bereit für Ihr nächstes Business-Matching? Schreiben Sie uns – wir melden uns innerhalb von 24 Stunden.</p>
+            </div>
+            <div class="contact-form">
+                <form action="https://formspree.io/f/mzebjnoz" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Ihr Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" required placeholder="ihre@email.de">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Unternehmen</label>
+                        <input type="text" id="company" name="company" placeholder="Ihr Unternehmen">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nachricht</label>
+                        <textarea id="message" name="message" required placeholder="Wie können wir Ihnen helfen?"></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Absenden</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Business Match</h3>
+                    <p>Gezielte Unternehmensvermittlung durch Recherche, Vorqualifizierung und persönliches Matching.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontakt</h3>
+                    <p>E-Mail: <a href="mailto:business.match@outlook.de">business.match@outlook.de</a></p>
+                    <p>Wir antworten innerhalb von 24 Stunden.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Rechtliches</h3>
+                    <p><a href="impressum.html">Impressum</a></p>
+                    <p><a href="datenschutz.html">Datenschutz</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Business Match. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
